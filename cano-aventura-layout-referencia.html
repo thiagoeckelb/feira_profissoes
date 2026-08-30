@@ -950,6 +950,129 @@
       padding:12px 14px;
     }
   }
+  /* ================= TELA FINAL ================= */
+
+#modalLayer.final-screen{
+  position:fixed;
+  inset:0;
+
+  width:100vw;
+  height:100vh;
+
+  padding:0;
+
+  background:
+    radial-gradient(
+      circle at center,
+      rgba(47,159,224,0.14),
+      rgba(2,12,24,0.97) 70%
+    );
+
+  z-index:99999;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+#modalLayer.final-screen .modal-card{
+  width:100%;
+  height:100%;
+
+  max-width:none;
+
+  border:none;
+  border-radius:0;
+
+  background:transparent;
+  box-shadow:none;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  color:white;
+}
+
+.final-content{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+
+  text-align:center;
+
+  padding:30px;
+}
+
+.final-icon{
+  width:90px;
+  height:90px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  border-radius:50%;
+
+  background:#2F9FE0;
+
+  color:white;
+
+  font-size:50px;
+  font-weight:800;
+
+  margin-bottom:28px;
+
+  box-shadow:
+    0 0 35px rgba(47,159,224,0.65);
+}
+
+.final-content h2{
+  color:white;
+
+  font-size:clamp(28px, 4vw, 52px);
+
+  margin:0 0 24px;
+}
+
+.final-content p{
+  color:#b9d1e4;
+
+  font-size:clamp(18px, 2vw, 28px);
+
+  margin:0 0 24px;
+}
+
+.final-code{
+  font-family:'Bungee', sans-serif;
+
+  font-size:clamp(70px, 12vw, 150px);
+
+  line-height:1;
+
+  color:#ffffff;
+
+  letter-spacing:18px;
+
+  padding-left:18px;
+
+  text-shadow:
+    0 0 15px rgba(47,159,224,0.9),
+    0 0 40px rgba(47,159,224,0.55);
+
+  animation:codePulse 1.8s ease-in-out infinite;
+}
+
+@keyframes codePulse{
+  0%,100%{
+    transform:scale(1);
+  }
+
+  50%{
+    transform:scale(1.06);
+  }
+}
 
 </style>
 </head>
@@ -1825,18 +1948,42 @@ function onLevelSuccess(){
   saveProgress();
   renderLevelsRow();
   const isLast = levelNum === LEVELS.length;
-  showModal({
-    emoji: isLast ? '🏆' : '🎉',
-    title: isLast ? 'Você é um encanador mestre!' : 'Cano consertado!',
-    text: isLast ? 'Você completou todos os níveis do Cano Aventura. Muito bem!' : `Nível ${levelNum} concluído. O Pinguinho chegou até o ralo!`,
-    primary: isLast ? 'Jogar de novo do início' : 'Próximo nível ▶',
-    onPrimary: ()=>{
-      hideModal();
-      if(isLast){ loadLevel(0); } else { loadLevel(currentLevelIdx+1); }
-    },
-    secondary: 'Fechar',
-    onSecondary: hideModal
-  });
+
+if(isLast){
+  showFinalCode();
+  return;
+}
+
+showModal({
+  emoji:'🎉',
+  title:'Cano consertado!',
+  text:`Nível ${levelNum} concluído. A água da região foi restaurada!`,
+  primary:'Próximo nível ▶',
+  onPrimary:()=>{
+    hideModal();
+    loadLevel(currentLevelIdx+1);
+  },
+  secondary:'Fechar',
+  onSecondary:hideModal
+});
+function showFinalCode(){
+  const layer = $('#modalLayer');
+  const card = $('#modalCard');
+
+  layer.classList.add('show', 'final-screen');
+
+  card.innerHTML = `
+    <div class="final-content">
+      <div class="final-icon">✓</div>
+
+      <h2>Missão concluída!</h2>
+
+      <p>Seu código para avançar na missão:</p>
+
+      <div class="final-code">AU</div>
+    </div>
+  `;
+}
 }
 
 /* ======================= TOAST / MODAL ======================= */
