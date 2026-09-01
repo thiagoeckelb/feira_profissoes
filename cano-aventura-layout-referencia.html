@@ -37,6 +37,11 @@
     --paper:#EEF5F8;
     --radius:14px;
     --shadow-hard: 0 3px 0 rgba(0,0,0,0.25);
+    --shadow-yellow: #af8600;
+    --yellow: #fcc100;
+    --orange:#f08102;
+    --light-orange:#fd9115;
+    --shadow-red: #af2402;
   }
 
   *{box-sizing:border-box;}
@@ -288,10 +293,10 @@
   }
   button.pill:active{transform:translateY(2px); box-shadow:0 1px 0 rgba(0,0,0,0.25);}
   button.pill:disabled{opacity:0.45; cursor:not-allowed; filter:grayscale(0.3);}
-  .btn-run{background:linear-gradient(180deg, var(--water-light), var(--water));}
-  .btn-stop{background:linear-gradient(180deg, #E97C6E, var(--leak));}
-  .btn-reset{background:linear-gradient(180deg, #9DB0B8, var(--steel));}
-  .btn-clear{background:linear-gradient(180deg, #C9B15A, var(--brass-deep));}
+  .btn-run{background:linear-gradient(180deg, var(--valve-green-deep), var(--valve-green));}
+  .btn-stop{background:linear-gradient(180deg, #e2351e, var(--leak));}
+  .btn-reset{background:linear-gradient(180deg, var(--light-orange), var(--orange));}
+  .btn-clear{background:linear-gradient(180deg, #ff4010, var(--shadow-red));}
   .btn-speed{background:linear-gradient(180deg, #8FBF9B, var(--valve-green));}
 
   /* ---------- code column ---------- */
@@ -371,7 +376,7 @@
   }
   .blk-delete:hover{background:rgba(0,0,0,0.45);}
 
-  .blk-move{ background:linear-gradient(180deg, var(--water-light), var(--water)); }
+  .blk-move{ background:linear-gradient(180deg, var(--water), var(--water)); }
   .blk-left, .blk-right{ background:linear-gradient(180deg, #8FA9B6, var(--steel)); }
   .blk-repeat{ background:linear-gradient(180deg, #E3C568, var(--brass)); }
   .blk-if{ background:linear-gradient(180deg, #7DBB8A, var(--valve-green)); }
@@ -1215,7 +1220,7 @@ const CONTAINER_TYPES = ['repeat','if','while'];
 const LEVELS = [
   {
     title:'Primeiros Passos',
-    mission:'O Pinguinho de água precisa chegar até o ralo! Arraste o bloco "Andar" para a tubulação, na ordem certa, e toque em Executar. Cada bloco é um passo do Pinguinho.',
+    mission:'Precisamos restaurar a distribuição de água da cidade! Arraste o bloco "Andar" para a tubulação, na ordem certa, e toque em Executar.',
     newBlock:null,
     startFacing:'E',
     actions:['F','F','F','F'],
@@ -1223,7 +1228,7 @@ const LEVELS = [
   },
   {
     title:'Vire o Cano',
-    mission:'Este cano faz uma curva! Use o novo bloco "Virar à direita" para o Pinguinho mudar de direção antes de continuar andando.',
+    mission:'Este cano faz uma curva! Use o novo bloco "Virar à direita" para a água mudar de direção antes de continuar andando.',
     newBlock:'↪️ Virar à direita',
     startFacing:'E',
     actions:['F','F','R','F','F'],
@@ -1255,7 +1260,7 @@ const LEVELS = [
   },
   {
     title:'Cano Seguro',
-    mission:'Novo bloco: "Se cano à frente"! Ele verifica se existe cano na frente do Pinguinho antes de andar, evitando vazamentos. Tente montar este nível usando o bloco "Se" no lugar do "Andar" solto.',
+    mission:'Novo bloco: "Se cano à frente"! Ele verifica se existe cano na frente da água antes de andar, evitando vazamentos. Tente montar este nível usando o bloco "Se" no lugar do "Andar" solto.',
     newBlock:'🚦 Se cano à frente',
     startFacing:'S',
     actions:['F','F','L','F','F'],
@@ -1271,7 +1276,7 @@ const LEVELS = [
   },
   {
     title:'Desafio do Encanador',
-    mission:'Desafio final! Este cano tem três partes de tamanhos diferentes, ligadas por curvas para a direita. Combine "Repetir", "Enquanto" e "Virar à direita" para levar o Pinguinho até o ralo final. Boa sorte, encanador(a)!',
+    mission:'Desafio final! Este cano tem três partes de tamanhos diferentes, ligadas por curvas para a direita. Combine "Repetir", "Enquanto" e "Virar à direita" para levar a água até o destino final. Boa sorte, programador(a)!',
     newBlock:null,
     startFacing:'E',
     actions:['F','F','F','F','R','F','F','F','R','F','F'],
@@ -1922,7 +1927,7 @@ async function runProgram(){
   if(runState.cancelled){ /* silent */ }
   else if(runState.success){ onLevelSuccess(); }
   else if(runState.error){ /* toast already shown */ }
-  else { showToast('💧 Quase lá! O Pinguinho ainda não chegou ao ralo.'); }
+  else { showToast('💧 Quase lá! A distribuição da água ainda não foi restaurada.'); }
 }
 function stopProgram(){
   if(runState) { runState.stopped = true; runState.cancelled = true; }
